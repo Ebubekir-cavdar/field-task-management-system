@@ -1,0 +1,10 @@
+==================================================
+KLASÖR BİLGİSİ: /mobile/src/services
+==================================================
+
+Mobil uygulamanın dış servisler (Backend REST API) ile iletişimini kuran katmandır.
+
+DOSYALAR:
+- api.js: Axios istemcisi tanımı. HTTP isteklerine otomatik JWT Bearer token eklenmesi ve hata yakalama (Interceptor) mekanizmasını yürütür.
+
+YAZAN: Yazılımcı bizzat kodlar.

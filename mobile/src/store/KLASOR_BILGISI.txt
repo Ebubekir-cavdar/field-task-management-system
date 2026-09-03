@@ -1,0 +1,11 @@
+==================================================
+KLASÖR BİLGİSİ: /mobile/src/store
+==================================================
+
+Zustand kütüphanesi ile mobil uygulamanın durum yönetimini (State Management) sağlayan klasördür.
+
+DOSYALAR:
+- useAuthStore.js: Kullanıcı oturum durumu, SecureStore erişimi, login/register/logout işlemleri.
+- useTaskStore.js: Görev listesi, detaylar, başlatma, fotoğraflı tamamlama ve log verilerinin uygulama içindeki durumu.
+
+YAZAN: Yazılımcı bizzat kodlar.

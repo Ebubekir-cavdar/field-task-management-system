@@ -1,0 +1,5 @@
+==================================================
+KLASÖR BİLGİSİ: /mobile/assets
+==================================================
+
+Mobil uygulamanın statik gralfilerinin, logo, favicon ve açılış (splash) görsellerinin tutulduğu klasördür.

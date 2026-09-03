@@ -1,0 +1,11 @@
+==================================================
+KLASÖR BİLGİSİ: /mobile/src
+==================================================
+
+Mobil uygulamanın tüm özelleştirilmiş kaynak kodlarının (Source Code) tutulduğu ana klasördür.
+
+KLASÖRLER:
+- config.js: API Base URL adresi.
+- screens/: Ekran arayüz bileşenleri (.jsx).
+- services/: Axios API HTTP bağlantı istemcisi (.js).
+- store/: Zustand state management dosyaları (.js).

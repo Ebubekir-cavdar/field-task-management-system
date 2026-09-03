@@ -1,0 +1,13 @@
+==================================================
+KLASÖR BİLGİSİ: /mobile
+==================================================
+
+Bu klasör, Saha Görev Yönetim Sistemi projesinin mobil (React Native / Expo) uygulamasını barındırır.
+
+İÇERİK VE DOSYALAR:
+- src/: Uygulama ekranları, servisleri ve Zustand store yapısının bulunduğu ana kod klasörü.
+- assets/: Logo, ikon, splash ekranı gibi statik medya dosyaları.
+- App.js: Uygulama ana giriş ve navigasyon bileşeni.
+- app.json: Expo uygulama ayarları.
+- package.json: Mobil kütüphane ve bağımlılık listesi.
+- index.js: Expo giriş noktası.

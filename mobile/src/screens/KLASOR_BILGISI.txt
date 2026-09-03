@@ -1,0 +1,14 @@
+==================================================
+KLASÖR BİLGİSİ: /mobile/src/screens
+==================================================
+
+Kullanıcının mobil uygulamada etkileşime girdiği tüm sayfa/ekran bileşenlerinin (.jsx) yer aldığı klasördür.
+
+DOSYALAR:
+- LoginRegisterScreen.jsx: Giriş yapma ve kayıt olma formu.
+- MyTasksScreen.jsx: Görev listeleme ve durum filtreleme ekranı.
+- CreateTaskScreen.jsx: Yeni görev atama formu.
+- TaskDetailScreen.jsx: Görev detayı, başlama, kamera ile fotoğraf çekip tamamlama ekranı.
+- TaskLogsScreen.jsx: Görev tarihçesi zaman çizelgesi (Timeline) ekranı.
+
+YAZAN: Yazılımcı bizzat kodlar.
