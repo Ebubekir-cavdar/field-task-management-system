@@ -1,0 +1,9 @@
+==================================================
+KLASÖR BİLGİSİ: /backend
+==================================================
+
+Bu klasör, Saha Görev Yönetim Sistemi projesinin sunucu tarafını (Backend) barındırır.
+
+İÇERİK VE AMAÇ:
+- TaskManagement.API: .NET 8 (C#) Web API projesinin kaynak kodlarının bulunduğu ana uygulama klasörüdür.
+- Sunucu tarafında veritabanı yönetimi (EF Core), kimlik doğrulama (JWT) ve RESTful API servisleri yer alır.

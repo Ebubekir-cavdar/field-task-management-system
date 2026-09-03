@@ -1,0 +1,15 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/DTOs
+==================================================
+
+DTO (Data Transfer Object - Veri Taşıma Nesnesi) Klasörü.
+
+İÇERİK VE AMAÇ:
+Mobil uygulama ile sunucu arasında veri gidip gelirken kullanılan özel sınıflardır.
+Veritabanı tablolarını doğrudan dış dünyaya açmamak (örneğin şifre hash'ini istemciye göndermemek veya kayıtta ekstra alanları engellemek) için kullanılır.
+
+DOSYALAR:
+- AuthDTOs.cs: RegisterRequest, LoginRequest, AuthResponse, UserResponse modelleri.
+- TaskDTOs.cs: CreateTaskRequest, CompleteTaskRequest, TaskResponse, TaskLogResponse modelleri.
+
+YAZAN: Yazılımcı bizzat elle kodlar.

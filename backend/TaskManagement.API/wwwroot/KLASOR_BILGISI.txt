@@ -1,0 +1,8 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/wwwroot
+==================================================
+
+.NET Web API projelerinde dışarıya açık statik dosyaların (Resimler, PDF'ler, Dokümanlar) sunulduğu kök klasördür.
+
+İÇERİK:
+- uploads/tasks/: Saha personelinin tamamladığı görevlere ait yüklediği kanıt fotoğrafları bu klasör altında saklanır.

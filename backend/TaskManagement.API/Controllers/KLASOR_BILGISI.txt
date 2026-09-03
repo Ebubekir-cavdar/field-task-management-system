@@ -1,0 +1,11 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/Controllers
+==================================================
+
+Bu klasör, mobil uygulamanın HTTP isteklerini (GET, POST, PATCH vb.) karşılayan API Controller sınıflarını içerir.
+
+İÇERİK:
+- AuthController.cs: Kullanıcı kayıt (Register) ve giriş (Login) isteklerini karşılar.
+- TasksController.cs: Görev oluşturma, listeleme, görev başlatma, kanıt fotoğrafı ile tamamlama ve log geçmişi getirme endpoint'lerini yönetir.
+
+YAZAN: Yazılımcı bizzat kodlar.

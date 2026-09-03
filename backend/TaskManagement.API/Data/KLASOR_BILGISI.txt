@@ -1,0 +1,10 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/Data
+==================================================
+
+Veritabanı erişim ve ORM (Entity Framework Core) konfigürasyon klasörüdür.
+
+DOSYALAR:
+- AppDbContext.cs: C# entity sınıfları ile veritabanı tablolarının eşleşmesini, indeks tanımlarını ve tablo ilişkilerini yöneten ana DbContext sınıfıdır.
+
+YAZAN: Yazılımcı bizzat kodlar.

@@ -1,0 +1,10 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/Services
+==================================================
+
+Backend içinde tekrarlanan veya özel yardımcı iş mantığı yüklerini (Business Logic) yürüten servis sınıflarının bulunduğu klasördür.
+
+DOSYALAR:
+- JwtService.cs: Giriş yapan kullanıcılar için şifrelenmiş JWT Token üreten servis.
+
+YAZAN: Yazılımcı bizzat kodlar.

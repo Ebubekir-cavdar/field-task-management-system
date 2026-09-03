@@ -1,0 +1,10 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/Properties
+==================================================
+
+Projenin çalıştırma (launch) ve ortam yapılandırma dosyalarının bulunduğu klasördür.
+
+DOSYALAR:
+- launchSettings.json: IIS Express / Kestrel sunucularının port ve ortam (Development) ayarları.
+
+YAZAN: Visual Studio veya yazılımcı tarafından ayarlanır.

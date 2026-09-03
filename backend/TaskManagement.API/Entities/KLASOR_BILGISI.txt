@@ -1,0 +1,12 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/Entities
+==================================================
+
+Veritabanındaki tabloları temsil eden C# varlık (Entity) modellerinin bulunduğu klasördür.
+
+DOSYALAR:
+- User.cs: Users (Kullanıcılar) tablosu.
+- TaskItem.cs: Tasks (Görevler) tablosu.
+- TaskLog.cs: Task_Logs (Görev Hareketleri) tablosu.
+
+YAZAN: Yazılımcı bizzat kodlar.

@@ -1,0 +1,8 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/wwwroot/uploads/tasks
+==================================================
+
+Mobil uygulama üzerinden görevi tamamlarken çekilen kanıt fotoğraflarının fiziki olarak kaydedildiği klasördür.
+
+İÇERİK:
+- Yüklenen `.jpg` / `.png` fotoğrafları (Örn: task_1_638000_a1b2c3d4.jpg).

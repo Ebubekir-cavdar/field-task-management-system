@@ -1,0 +1,18 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API
+==================================================
+
+Bu klasör, .NET 8 Web API projesinin tüm kaynak kodlarını, konfigürasyonlarını ve yapıtaşlarını içerir.
+
+İÇERİK VE DOSYALAR:
+- Controllers/: Mobil uygulamanın istek attığı HTTP endpoint sınıfları.
+- DTOs/: İstemci ile sunucu arasında veri taşımaya yarayan nesne tanımları.
+- Data/: Veritabanı bağlantısı ve EF Core DbContext ayarları.
+- Entities/: Veritabanı tablolarının C# model karşılıkları.
+- Migrations/: Veritabanı şema güncellemelerinin kayıt dosyaları.
+- Properties/: Proje açılış ve launchSettings ayarları.
+- Services/: JWT Token üretimi gibi özel iş mantığı servisleri.
+- wwwroot/: Dışarıya açık statik dosyalar (Yüklenen kanıt fotoğrafları).
+- Program.cs: Uygulama giriş noktası ve servis kayıtları.
+- appsettings.json: Veritabanı ve JWT şifreleme konfigürasyon dosyası.
+- TaskManagement.API.csproj: C# proje bağımlılık ve versiyon dosyası.

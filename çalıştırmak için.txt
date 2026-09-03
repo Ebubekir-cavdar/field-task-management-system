@@ -1,0 +1,6 @@
+cd c:\Users\PC\Desktop\project1\backend\TaskManagement.API
+dotnet run --urls "http://0.0.0.0:5000"
+
+
+cd c:\Users\PC\Desktop\project1\mobile
+npx expo start -c

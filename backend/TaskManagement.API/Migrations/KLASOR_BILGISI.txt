@@ -1,0 +1,10 @@
+==================================================
+KLASÖR BİLGİSİ: /backend/TaskManagement.API/Migrations
+==================================================
+
+Entity Framework Core veritabanı göç (Migration) dosyalarının saklandığı klasördür.
+
+İÇERİK:
+- C# kodlarında yapılan veritabanı değişikliklerini (yeni tablo, yeni sütun vb.) SQL veritabanına aktarmak için üretilen otomatik değişim kodlarıdır.
+
+YAZAN: Yazılımcı `dotnet ef migrations add ...` komutunu çalıştırır, kodları Entity Framework Core OTOMATİK üretir.
