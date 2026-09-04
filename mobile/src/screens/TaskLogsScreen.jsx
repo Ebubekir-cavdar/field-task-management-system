@@ -8,6 +8,8 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { useTaskStore } from '../store/useTaskStore';
+import { useThemeStore } from '../store/useThemeStore';
+import { lightTheme, darkTheme } from '../theme';
 
 /**
  * Görev Hareket Geçmişi (Log Audit Timeline) Ekran Bileşeni.
@@ -17,8 +19,10 @@ export default function TaskLogsScreen({ route }) {
   // Navigasyon parametresi ile aktarılan taskId
   const { taskId } = route.params;
 
-  // Task Store'dan log verileri ve indirme metodu
+  // Task Store ve Theme Store'dan log verileri ve tema al
   const { taskLogs, fetchTaskLogs, isLoading } = useTaskStore();
+  const { isDarkMode } = useThemeStore();
+  const colors = isDarkMode ? darkTheme : lightTheme;
 
   // Ekran yüklendiğinde görevin geçmiş log kayıtlarını sunucudan çek
   useEffect(() => {
@@ -52,19 +56,21 @@ export default function TaskLogsScreen({ route }) {
         <View style={styles.timelineLeft}>
           <View style={[styles.timelineDot, { backgroundColor: badge.color }]} />
           {/* Son eleman değilse iki nokta arasına dikey çizgi çiz */}
-          {index !== taskLogs.length - 1 && <View style={styles.timelineLine} />}
+          {index !== taskLogs.length - 1 && (
+            <View style={[styles.timelineLine, { backgroundColor: colors.border }]} />
+          )}
         </View>
 
         {/* Log Kartı */}
-        <View style={styles.logCard}>
+        <View style={[styles.logCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <View style={styles.cardHeader}>
             <Text style={[styles.actionText, { color: badge.color }]}>{badge.label}</Text>
-            <Text style={styles.timeText}>
+            <Text style={[styles.timeText, { color: colors.subtext }]}>
               {new Date(item.timeStamp).toLocaleString('tr-TR')}
             </Text>
           </View>
 
-          <Text style={styles.performedByText}>
+          <Text style={[styles.performedByText, { color: colors.subtext }]}>
             İşlemi Yapan: {item.userName} {item.userSurname} (ID: {item.userID})
           </Text>
         </View>
@@ -73,18 +79,18 @@ export default function TaskLogsScreen({ route }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Üst Başlık */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Görev Hareketleri (Logs)</Text>
-        <Text style={styles.headerSubtitle}>Görev ID: #{taskId}</Text>
+      <View style={[styles.header, { borderBottomColor: colors.border }]}>
+        <Text style={[styles.headerTitle, { color: colors.text }]}>Görev Hareketleri (Logs)</Text>
+        <Text style={[styles.headerSubtitle, { color: colors.subtext }]}>Görev ID: #{taskId}</Text>
       </View>
 
       {/* İçerik Yüklenme Durumu ve Liste */}
       {isLoading ? (
         <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" color="#3B82F6" />
-          <Text style={styles.loadingText}>Loglar Yükleniyor...</Text>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={[styles.loadingText, { color: colors.subtext }]}>Loglar Yükleniyor...</Text>
         </View>
       ) : (
         <FlatList
@@ -94,7 +100,7 @@ export default function TaskLogsScreen({ route }) {
           contentContainerStyle={styles.listContent}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <Text style={styles.emptyText}>Bu göreve ait log kaydı bulunamadı.</Text>
+              <Text style={[styles.emptyText, { color: colors.subtext }]}>Bu göreve ait log kaydı bulunamadı.</Text>
             </View>
           }
         />

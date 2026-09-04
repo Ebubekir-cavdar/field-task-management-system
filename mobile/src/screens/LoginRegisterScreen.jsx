@@ -10,8 +10,11 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import { useAuthStore } from '../store/useAuthStore';
+import { useThemeStore } from '../store/useThemeStore';
+import { lightTheme, darkTheme } from '../theme';
 
 /**
  * Kullanıcı Giriş ve Kayıt Ekranı Bileşeni.
@@ -27,8 +30,10 @@ export default function LoginRegisterScreen() {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
-  // Global Auth Store'dan metod ve yüklenme durumları alınır
+  // Global Auth Store ve Theme Store
   const { login, register, isLoading, error } = useAuthStore();
+  const { isDarkMode, toggleTheme } = useThemeStore();
+  const colors = isDarkMode ? darkTheme : lightTheme;
 
   /**
    * Giriş Yap butonuna basıldığında tetiklenir.
@@ -71,51 +76,63 @@ export default function LoginRegisterScreen() {
     // Klavyenin formu kapatmasını engelleyen konteyner
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
     >
       <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
+        {/* Üst Sağ Tema Değiştirme Butonu */}
+        <View style={styles.topBar}>
+          <TouchableOpacity
+            style={[styles.themeToggleButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+            onPress={toggleTheme}
+          >
+            <Text style={[styles.themeToggleText, { color: colors.text }]}>
+              {isDarkMode ? '☀️ Light' : '🌙 Dark'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         {/* Başlık Alanı */}
         <View style={styles.header}>
-          <Text style={styles.appTitle}>Saha Görev Yönetimi</Text>
-          <Text style={styles.appSubtitle}>Mobil Saha Ekip Portalı</Text>
+          <Text style={[styles.appTitle, { color: colors.text }]}>Saha Görev Yönetimi</Text>
+          <Text style={[styles.appSubtitle, { color: colors.subtext }]}>Mobil Saha Ekip Portalı</Text>
         </View>
 
         {/* Form Kartı */}
-        <View style={styles.card}>
+        <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
           {/* Sekme Değiştirici (Tab Switcher: Giriş Yap / Kayıt Ol) */}
-          <View style={styles.tabContainer}>
+          <View style={[styles.tabContainer, { backgroundColor: colors.background }]}>
             <TouchableOpacity
-              style={[styles.tabButton, isLoginTab && styles.activeTab]}
+              style={[styles.tabButton, isLoginTab && { backgroundColor: colors.primary }]}
               onPress={() => setIsLoginTab(true)}
             >
-              <Text style={[styles.tabText, isLoginTab && styles.activeTabText]}>Giriş Yap</Text>
+              <Text style={[styles.tabText, { color: isLoginTab ? '#FFFFFF' : colors.subtext }]}>Giriş Yap</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.tabButton, !isLoginTab && styles.activeTab]}
+              style={[styles.tabButton, !isLoginTab && { backgroundColor: colors.primary }]}
               onPress={() => setIsLoginTab(false)}
             >
-              <Text style={[styles.tabText, !isLoginTab && styles.activeTabText]}>Kayıt Ol</Text>
+              <Text style={[styles.tabText, { color: !isLoginTab ? '#FFFFFF' : colors.subtext }]}>Kayıt Ol</Text>
             </TouchableOpacity>
           </View>
 
           {/* Kayıt Ol sekmesinde ekstra çıkan Ad ve Soyad alanları */}
           {!isLoginTab && (
             <>
-              <Text style={styles.label}>Ad</Text>
+              <Text style={[styles.label, { color: colors.subtext }]}>Ad</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
                 placeholder="Ahmet"
-                placeholderTextColor="#94A3B8"
+                placeholderTextColor={colors.placeholder}
                 value={name}
                 onChangeText={setName}
                 autoCapitalize="words"
               />
 
-              <Text style={styles.label}>Soyad</Text>
+              <Text style={[styles.label, { color: colors.subtext }]}>Soyad</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
                 placeholder="Yılmaz"
-                placeholderTextColor="#94A3B8"
+                placeholderTextColor={colors.placeholder}
                 value={surname}
                 onChangeText={setSurname}
                 autoCapitalize="words"
@@ -124,11 +141,11 @@ export default function LoginRegisterScreen() {
           )}
 
           {/* E-Posta Adresi İnputu */}
-          <Text style={styles.label}>E-Posta Adresi</Text>
+          <Text style={[styles.label, { color: colors.subtext }]}>E-Posta Adresi</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
             placeholder="ornek@saha.com"
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={colors.placeholder}
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -136,11 +153,11 @@ export default function LoginRegisterScreen() {
           />
 
           {/* Şifre İnputu */}
-          <Text style={styles.label}>Şifre</Text>
+          <Text style={[styles.label, { color: colors.subtext }]}>Şifre</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
             placeholder="••••••••"
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={colors.placeholder}
             value={password}
             onChangeText={setPassword}
             secureTextEntry
@@ -151,7 +168,7 @@ export default function LoginRegisterScreen() {
 
           {/* Gönder (Giriş / Kayıt) Butonu */}
           <TouchableOpacity
-            style={styles.submitButton}
+            style={[styles.submitButton, { backgroundColor: colors.primary }]}
             onPress={isLoginTab ? handleLogin : handleRegister}
             disabled={isLoading}
           >
@@ -174,11 +191,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0F172A',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
     padding: 24,
+  },
+  topBar: {
+    alignItems: 'flex-end',
+    marginBottom: 12,
+  },
+  themeToggleButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  themeToggleText: {
+    fontSize: 12,
+    fontWeight: '600',
   },
   header: {
     alignItems: 'center',

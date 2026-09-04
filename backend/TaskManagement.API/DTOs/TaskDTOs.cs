@@ -25,6 +25,8 @@ namespace TaskManagement.API.DTOs
     public class CompleteTaskRequest
     {
         public IFormFile? Photo { get; set; }
+        public string? Latitude { get; set; }
+        public string? Longitude { get; set; }
     }
 
     /// <summary>
@@ -42,6 +44,8 @@ namespace TaskManagement.API.DTOs
         public DateTime? Completed_at { get; set; }
         public DateTime Created_at { get; set; }
         public string? Proof_Image_Url { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
         public string UserName { get; set; } = string.Empty;
         public string UserSurname { get; set; } = string.Empty;
     }

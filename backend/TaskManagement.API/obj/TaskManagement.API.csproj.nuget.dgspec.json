@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\TaskManagement.API.csproj": {}
+    "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\TaskManagement.API.csproj": {}
   },
   "projects": {
-    "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\TaskManagement.API.csproj": {
+    "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\TaskManagement.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\TaskManagement.API.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\TaskManagement.API.csproj",
         "projectName": "TaskManagement.API",
-        "projectPath": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\TaskManagement.API.csproj",
+        "projectPath": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\TaskManagement.API.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\obj\\",
+        "outputPath": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -4,6 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuthStore } from './src/store/useAuthStore';
 
+import { useThemeStore } from './src/store/useThemeStore';
+import { lightTheme, darkTheme } from './src/theme';
+
 // Ekran (Screen) Bileşenleri
 import LoginRegisterScreen from './src/screens/LoginRegisterScreen';
 import MyTasksScreen from './src/screens/MyTasksScreen';
@@ -21,13 +24,19 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   // Zustand Auth Store'dan kullanıcı durumu çekilir
   const { user, isLoading } = useAuthStore();
+  // Zustand Theme Store'dan karanlık mod durumu çekilir
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
+  const theme = isDarkMode ? darkTheme : lightTheme;
 
   // Yüklenme devam ediyorken Spinner gösterilir
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
-        <ActivityIndicator size="large" color="#3B82F6" />
+      <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={theme.background}
+        />
+        <ActivityIndicator size="large" color={theme.primary} />
       </View>
     );
   }
@@ -35,20 +44,23 @@ export default function App() {
   return (
     // Tüm navigasyon yapısını kapsayan ana konteyner
     <NavigationContainer>
-      <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={theme.background}
+      />
 
       {/* Ekranlar arası geçişi sağlayan Stack Navigator */}
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#0F172A',
+            backgroundColor: theme.card,
           },
-          headerTintColor: '#F8FAFC',
+          headerTintColor: theme.text,
           headerTitleStyle: {
             fontWeight: '700',
           },
           contentStyle: {
-            backgroundColor: '#0F172A',
+            backgroundColor: theme.background,
           },
         }}
       >

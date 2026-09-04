@@ -1,28 +1,40 @@
 {
   "Files": [
     {
-      "Id": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\KLASOR_BILGISI.txt",
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\KLASOR_BILGISI.txt",
       "PackagePath": "staticwebassets\\KLASOR_BILGISI.txt"
     },
     {
-      "Id": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\KLASOR_BILGISI.txt",
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\KLASOR_BILGISI.txt",
       "PackagePath": "staticwebassets\\uploads\\tasks\\KLASOR_BILGISI.txt"
     },
     {
-      "Id": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_1_639237632666805578_7d7581c0.jpeg",
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_1_639237632666805578_7d7581c0.jpeg",
       "PackagePath": "staticwebassets\\uploads\\tasks\\task_1_639237632666805578_7d7581c0.jpeg"
     },
     {
-      "Id": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_2_639237633492535746_175bca15.jpeg",
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_2_639237633492535746_175bca15.jpeg",
       "PackagePath": "staticwebassets\\uploads\\tasks\\task_2_639237633492535746_175bca15.jpeg"
     },
     {
-      "Id": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_3_639237635623629127_34afd029.jpeg",
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_3_639237635623629127_34afd029.jpeg",
       "PackagePath": "staticwebassets\\uploads\\tasks\\task_3_639237635623629127_34afd029.jpeg"
     },
     {
-      "Id": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_4_639237641255304259_8ba89987.jpeg",
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_4_639237641255304259_8ba89987.jpeg",
       "PackagePath": "staticwebassets\\uploads\\tasks\\task_4_639237641255304259_8ba89987.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_5_639239557513118857_3be42c0e.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\tasks\\task_5_639239557513118857_3be42c0e.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_7_639240322459962622_44fc1512.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\tasks\\task_7_639240322459962622_44fc1512.jpeg"
+    },
+    {
+      "Id": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_8_639240324288637795_b89a857c.jpeg",
+      "PackagePath": "staticwebassets\\uploads\\tasks\\task_8_639240324288637795_b89a857c.jpeg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.TaskManagement.API.Microsoft.AspNetCore.StaticWebAssets.props",

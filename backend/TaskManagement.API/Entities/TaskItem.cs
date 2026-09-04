@@ -46,6 +46,12 @@ namespace TaskManagement.API.Entities
         // Görev tamamlanırken çekilen kanıt fotoğrafının sunucudaki bağıl URL yolu (/uploads/tasks/...).
         public string? Proof_Image_Url { get; set; }
 
+        // Görevin tamamlandığı esnadaki GPS enlem (Latitude) koordinatı.
+        public double? Latitude { get; set; }
+
+        // Görevin tamamlandığı esnadaki GPS boylam (Longitude) koordinatı.
+        public double? Longitude { get; set; }
+
         // --- Navigasyon Özellikleri (EF Core İlişkileri) ---
 
         // Görevin atandığı kullanıcı nesnesi.

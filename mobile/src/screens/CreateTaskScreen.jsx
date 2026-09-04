@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import { useTaskStore } from '../store/useTaskStore';
 import { useAuthStore } from '../store/useAuthStore';
+import { useThemeStore } from '../store/useThemeStore';
+import { lightTheme, darkTheme } from '../theme';
 
 /**
  * Yeni Görev Oluşturma Ekranı Bileşeni.
@@ -20,6 +22,8 @@ import { useAuthStore } from '../store/useAuthStore';
 export default function CreateTaskScreen({ navigation }) {
   const { user } = useAuthStore();
   const { createTask, isLoading } = useTaskStore();
+  const { isDarkMode } = useThemeStore();
+  const colors = isDarkMode ? darkTheme : lightTheme;
 
   // Form State'leri
   const [title, setTitle] = useState('');
@@ -51,32 +55,32 @@ export default function CreateTaskScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         {/* Başlık ve Açıklama Metni */}
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Yeni Görev Oluştur</Text>
-          <Text style={styles.headerSubtitle}>Saha personeline yeni bir iş görevi tanımlayın.</Text>
+          <Text style={[styles.headerTitle, { color: colors.text }]}>Yeni Görev Oluştur</Text>
+          <Text style={[styles.headerSubtitle, { color: colors.subtext }]}>Saha personeline yeni bir iş görevi tanımlayın.</Text>
         </View>
 
         {/* Form Kartı */}
-        <View style={styles.formCard}>
+        <View style={[styles.formCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
           {/* Görev Başlığı Girişi */}
-          <Text style={styles.label}>Görev Başlığı *</Text>
+          <Text style={[styles.label, { color: colors.subtext }]}>Görev Başlığı *</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
             placeholder="Örn: Trafo Bakımı ve Fotoğraflama"
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={colors.placeholder}
             value={title}
             onChangeText={setTitle}
           />
 
           {/* Görev Açıklaması Girişi */}
-          <Text style={styles.label}>Görev Açıklaması</Text>
+          <Text style={[styles.label, { color: colors.subtext }]}>Görev Açıklaması</Text>
           <TextInput
-            style={[styles.input, styles.textArea]}
+            style={[styles.input, styles.textArea, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
             placeholder="Saha detayları, lokasyon ve yapılacak işlem talimatı..."
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={colors.placeholder}
             value={description}
             onChangeText={setDescription}
             multiline
@@ -84,22 +88,22 @@ export default function CreateTaskScreen({ navigation }) {
           />
 
           {/* Atanacak Kullanıcı ID Girişi */}
-          <Text style={styles.label}>Atanacak Kullanıcı ID (UserID) *</Text>
+          <Text style={[styles.label, { color: colors.subtext }]}>Atanacak Kullanıcı ID (UserID) *</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, { backgroundColor: colors.background, color: colors.text, borderColor: colors.border }]}
             placeholder="1"
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={colors.placeholder}
             value={targetUserId}
             onChangeText={setTargetUserId}
             keyboardType="number-pad"
           />
-          <Text style={styles.helperText}>
+          <Text style={[styles.helperText, { color: colors.subtext }]}>
             Varsayılan olarak kendi Kullanıcı ID'niz ({user?.userID}) doldurulmuştur.
           </Text>
 
           {/* Gönder Butonu */}
           <TouchableOpacity
-            style={styles.submitButton}
+            style={[styles.submitButton, { backgroundColor: colors.primary }]}
             onPress={handleSubmit}
             disabled={isLoading}
           >

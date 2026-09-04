@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HN3uM55umiI4c/CPKDQpSugvv6Yxnku7sqn9N2N4XyM=",
+  "Hash": "w8ihENg+fDgtX/RNDfGyRGYxyUy9lwmgZf9KK06AMgc=",
   "Source": "TaskManagement.API",
   "BasePath": "_content/TaskManagement.API",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "TaskManagement.API\\wwwroot",
       "Source": "TaskManagement.API",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\KLASOR_BILGISI.txt",
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\KLASOR_BILGISI.txt",
       "SourceId": "TaskManagement.API",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "RelativePath": "KLASOR_BILGISI.txt",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\KLASOR_BILGISI.txt"
     },
     {
-      "Identity": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\KLASOR_BILGISI.txt",
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\KLASOR_BILGISI.txt",
       "SourceId": "TaskManagement.API",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "RelativePath": "uploads/tasks/KLASOR_BILGISI.txt",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\tasks\\KLASOR_BILGISI.txt"
     },
     {
-      "Identity": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_1_639237632666805578_7d7581c0.jpeg",
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_1_639237632666805578_7d7581c0.jpeg",
       "SourceId": "TaskManagement.API",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "RelativePath": "uploads/tasks/task_1_639237632666805578_7d7581c0.jpeg",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_1_639237632666805578_7d7581c0.jpeg"
     },
     {
-      "Identity": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_2_639237633492535746_175bca15.jpeg",
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_2_639237633492535746_175bca15.jpeg",
       "SourceId": "TaskManagement.API",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "RelativePath": "uploads/tasks/task_2_639237633492535746_175bca15.jpeg",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_2_639237633492535746_175bca15.jpeg"
     },
     {
-      "Identity": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_3_639237635623629127_34afd029.jpeg",
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_3_639237635623629127_34afd029.jpeg",
       "SourceId": "TaskManagement.API",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "RelativePath": "uploads/tasks/task_3_639237635623629127_34afd029.jpeg",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_3_639237635623629127_34afd029.jpeg"
     },
     {
-      "Identity": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_4_639237641255304259_8ba89987.jpeg",
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_4_639237641255304259_8ba89987.jpeg",
       "SourceId": "TaskManagement.API",
       "SourceType": "Discovered",
-      "ContentRoot": "c:\\Users\\PC\\Desktop\\project1\\backend\\TaskManagement.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
       "BasePath": "_content/TaskManagement.API",
       "RelativePath": "uploads/tasks/task_4_639237641255304259_8ba89987.jpeg",
       "AssetKind": "All",
@@ -129,6 +129,63 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_4_639237641255304259_8ba89987.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_5_639239557513118857_3be42c0e.jpeg",
+      "SourceId": "TaskManagement.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
+      "BasePath": "_content/TaskManagement.API",
+      "RelativePath": "uploads/tasks/task_5_639239557513118857_3be42c0e.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_5_639239557513118857_3be42c0e.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_7_639240322459962622_44fc1512.jpeg",
+      "SourceId": "TaskManagement.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
+      "BasePath": "_content/TaskManagement.API",
+      "RelativePath": "uploads/tasks/task_7_639240322459962622_44fc1512.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_7_639240322459962622_44fc1512.jpeg"
+    },
+    {
+      "Identity": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\uploads\\tasks\\task_8_639240324288637795_b89a857c.jpeg",
+      "SourceId": "TaskManagement.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\PC\\Desktop\\field-task-management-system\\backend\\TaskManagement.API\\wwwroot\\",
+      "BasePath": "_content/TaskManagement.API",
+      "RelativePath": "uploads/tasks/task_8_639240324288637795_b89a857c.jpeg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\tasks\\task_8_639240324288637795_b89a857c.jpeg"
     }
   ]
 }

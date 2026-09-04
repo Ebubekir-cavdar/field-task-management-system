@@ -1,3 +1,4 @@
-# Expo HAS CHANGED
+# Expo SDK Configuration
 
-Read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ before writing any code.
+Expo SDK v54.0.0 is used in this project.
+

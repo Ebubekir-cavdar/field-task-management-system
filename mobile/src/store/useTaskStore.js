@@ -51,8 +51,9 @@ export const useTaskStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await api.patch(`/tasks/${taskId}/start`);
-      // Tek istek ile güncel detayı çek
+      // Tek istek ile güncel detayı ve genel listeyi çek
       await get().fetchTaskById(taskId);
+      await get().fetchMyTasks();
       set({ isLoading: false });
       return response.data;
     } catch (err) {
@@ -66,8 +67,9 @@ export const useTaskStore = create((set, get) => ({
    * POST /api/v1/tasks/{taskId}/complete (multipart/form-data)
    * @param {number} taskId Tamamlanacak görev ID'si
    * @param {string} photoUri Kameradan çekilen fotoğrafın yerel URI adresi
+   * @param {object} location Cihazdan çekilen GPS konum nesnesi ({ latitude, longitude })
    */
-  completeTask: async (taskId, photoUri) => {
+  completeTask: async (taskId, photoUri, location = null) => {
     set({ isLoading: true, error: null });
     try {
       const formData = new FormData();
@@ -85,6 +87,14 @@ export const useTaskStore = create((set, get) => ({
         });
       }
 
+      // GPS Konum koordinatları var ise form verilerine ekle
+      if (location && location.latitude != null && location.longitude != null) {
+        formData.append('latitude', location.latitude.toString());
+        formData.append('longitude', location.longitude.toString());
+        formData.append('Latitude', location.latitude.toString());
+        formData.append('Longitude', location.longitude.toString());
+      }
+
       // Sunucuya multipart/form-data isteği atılır
       const response = await api.post(`/tasks/${taskId}/complete`, formData, {
         headers: {
@@ -92,8 +102,9 @@ export const useTaskStore = create((set, get) => ({
         },
       });
 
-      // Tek istek ile güncel görevi çek
+      // Tek istek ile güncel görevi ve genel listeyi çek
       await get().fetchTaskById(taskId);
+      await get().fetchMyTasks();
       set({ isLoading: false });
       return response.data;
     } catch (err) {

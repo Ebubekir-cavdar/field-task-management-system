@@ -14,6 +14,24 @@ const api = axios.create({
 });
 
 /**
+ * Request Interceptor (İstek Öncesi Arayazılım):
+ * Her HTTP isteğinde Zustand AuthStore'daki aktif kullanıcının UserID'sini X-User-ID başlığı olarak otomatik ekler.
+ */
+api.interceptors.request.use((config) => {
+  try {
+    // Zustand Auth Store'dan mevcut kullanıcıyı al
+    const { useAuthStore } = require('../store/useAuthStore');
+    const user = useAuthStore.getState().user;
+    if (user && user.userID) {
+      config.headers['X-User-ID'] = user.userID.toString();
+    }
+  } catch (e) {
+    // Döngüsel bağımlılık durumunda sessizce geç
+  }
+  return config;
+});
+
+/**
  * Response Interceptor (Yanıt Sonrası Arayazılım):
  * Sunucudan gelen yanıtları ve dönen HTTP hatalarını (400, 500 vb.) yakalar.
  */

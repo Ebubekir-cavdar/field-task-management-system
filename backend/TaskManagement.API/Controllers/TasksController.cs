@@ -57,6 +57,8 @@ namespace TaskManagement.API.Controllers
                 Completed_at = t.Completed_at,
                 Created_at = t.Created_at,
                 Proof_Image_Url = t.Proof_Image_Url,
+                Latitude = t.Latitude,
+                Longitude = t.Longitude,
                 UserName = t.User != null ? t.User.Name : "",
                 UserSurname = t.User != null ? t.User.Surname : ""
             };
@@ -204,9 +206,19 @@ namespace TaskManagement.API.Controllers
                 task.Proof_Image_Url = $"/uploads/tasks/{fileName}";
             }
 
+            if (!string.IsNullOrWhiteSpace(request.Latitude) && double.TryParse(request.Latitude.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double parsedLat))
+            {
+                task.Latitude = parsedLat;
+            }
+            if (!string.IsNullOrWhiteSpace(request.Longitude) && double.TryParse(request.Longitude.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double parsedLng))
+            {
+                task.Longitude = parsedLng;
+            }
+
             task.Status = "COMPLETED";
             task.Completed_at = DateTime.UtcNow;
 
+            await _context.SaveChangesAsync();
             await LogActionAsync(task.TaskID, GetCurrentUserId(), "COMPLETED");
 
             return Ok(new { 
@@ -214,7 +226,9 @@ namespace TaskManagement.API.Controllers
                 taskId = task.TaskID, 
                 status = task.Status, 
                 completed_at = task.Completed_at,
-                proof_Image_Url = task.Proof_Image_Url 
+                proof_Image_Url = task.Proof_Image_Url,
+                latitude = task.Latitude,
+                longitude = task.Longitude
             });
         }
 

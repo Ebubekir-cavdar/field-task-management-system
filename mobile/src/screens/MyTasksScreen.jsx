@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   StyleSheet,
   Text,
@@ -9,9 +10,12 @@ import {
   ActivityIndicator,
   SafeAreaView,
   StatusBar,
+  Platform,
 } from 'react-native';
 import { useTaskStore } from '../store/useTaskStore';
 import { useAuthStore } from '../store/useAuthStore';
+import { useThemeStore } from '../store/useThemeStore';
+import { lightTheme, darkTheme } from '../theme';
 
 /**
  * Kullanıcının Kendisine Atanmış Görevleri Listelediği Ana Ekran Bileşeni.
@@ -20,14 +24,18 @@ import { useAuthStore } from '../store/useAuthStore';
 export default function MyTasksScreen({ navigation }) {
   const { user, logout } = useAuthStore();
   const { myTasks, fetchMyTasks, isLoading } = useTaskStore();
+  const { isDarkMode, toggleTheme } = useThemeStore();
+  const colors = isDarkMode ? darkTheme : lightTheme;
 
   // Filtreleme Durumu ('ALL', 'ASSIGNED', 'IN_PROGRESS', 'COMPLETED')
   const [filterStatus, setFilterStatus] = useState('ALL');
 
-  // Ekran ilk yüklendiğinde kullanıcının görevlerini API'den çek
-  useEffect(() => {
-    fetchMyTasks();
-  }, []);
+  // Ekran her odaklandığında (detaydan geri dönüldüğünde) kullanıcının görevlerini API'den tazele
+  useFocusEffect(
+    useCallback(() => {
+      fetchMyTasks();
+    }, [])
+  );
 
   /**
    * Görev durumuna göre rozet (badge) etiketi, metin rengi ve arka plan rengini belirler.
@@ -35,13 +43,13 @@ export default function MyTasksScreen({ navigation }) {
   const getStatusBadge = (status) => {
     switch (status) {
       case 'ASSIGNED':
-        return { label: 'ATANDI', color: '#3B82F6', bg: '#1E3A8A' };
+        return { label: 'ATANDI', color: '#3B82F6', bg: isDarkMode ? '#1E3A8A' : '#DBEAFE' };
       case 'IN_PROGRESS':
-        return { label: 'DEVAM EDİYOR', color: '#F59E0B', bg: '#78350F' };
+        return { label: 'DEVAM EDİYOR', color: '#F59E0B', bg: isDarkMode ? '#78350F' : '#FEF3C7' };
       case 'COMPLETED':
-        return { label: 'TAMAMLANDI', color: '#10B981', bg: '#064E3B' };
+        return { label: 'TAMAMLANDI', color: '#10B981', bg: isDarkMode ? '#064E3B' : '#D1FAE5' };
       default:
-        return { label: status, color: '#94A3B8', bg: '#334155' };
+        return { label: status, color: '#94A3B8', bg: isDarkMode ? '#334155' : '#E2E8F0' };
     }
   };
 
@@ -58,11 +66,11 @@ export default function MyTasksScreen({ navigation }) {
     const badge = getStatusBadge(item.status);
     return (
       <TouchableOpacity
-        style={styles.taskCard}
+        style={[styles.taskCard, { backgroundColor: colors.card, borderColor: colors.border }]}
         onPress={() => navigation.navigate('TaskDetail', { taskId: item.taskID })}
       >
         <View style={styles.cardHeader}>
-          <Text style={styles.taskTitle} numberOfLines={1}>
+          <Text style={[styles.taskTitle, { color: colors.text }]} numberOfLines={1}>
             {item.title}
           </Text>
           {/* Durum Rozeti */}
@@ -71,12 +79,12 @@ export default function MyTasksScreen({ navigation }) {
           </View>
         </View>
 
-        <Text style={styles.taskDescription} numberOfLines={2}>
+        <Text style={[styles.taskDescription, { color: colors.subtext }]} numberOfLines={2}>
           {item.description || 'Açıklama belirtilmemiş.'}
         </Text>
 
-        <View style={styles.cardFooter}>
-          <Text style={styles.dateText}>
+        <View style={[styles.cardFooter, { borderTopColor: colors.border }]}>
+          <Text style={[styles.dateText, { color: colors.subtext }]}>
             Oluşturulma: {new Date(item.created_at).toLocaleDateString('tr-TR')}
           </Text>
           <Text style={styles.detailLink}>Detay →</Text>
@@ -86,22 +94,36 @@ export default function MyTasksScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={colors.background}
+      />
 
       {/* Üst Kullanıcı Bilgi Barı */}
-      <View style={styles.userHeader}>
+      <View style={[styles.userHeader, { borderBottomColor: colors.border }]}>
         <View>
-          <Text style={styles.welcomeText}>Hoş Geldiniz,</Text>
-          <Text style={styles.userNameText}>
+          <Text style={[styles.welcomeText, { color: colors.subtext }]}>Hoş Geldiniz,</Text>
+          <Text style={[styles.userNameText, { color: colors.text }]}>
             {user?.name} {user?.surname}
           </Text>
         </View>
 
-        {/* Çıkış Yap Butonu */}
-        <TouchableOpacity style={styles.logoutButton} onPress={logout}>
-          <Text style={styles.logoutText}>Çıkış Yap</Text>
-        </TouchableOpacity>
+        {/* Tema Değiştirme & Çıkış Yap Butonları */}
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <TouchableOpacity
+            style={[styles.themeToggleButton, { backgroundColor: colors.card, borderColor: colors.border }]}
+            onPress={toggleTheme}
+          >
+            <Text style={[styles.themeToggleText, { color: colors.text }]}>
+              {isDarkMode ? '☀️ Light' : '🌙 Dark'}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.logoutButton, { backgroundColor: colors.buttonBg }]} onPress={logout}>
+            <Text style={styles.logoutText}>Çıkış Yap</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Filtreleme Sekmeleri (Filter Chips) */}
@@ -114,12 +136,17 @@ export default function MyTasksScreen({ navigation }) {
         ].map((tab) => (
           <TouchableOpacity
             key={tab.key}
-            style={[styles.filterChip, filterStatus === tab.key && styles.activeFilterChip]}
+            style={[
+              styles.filterChip,
+              { backgroundColor: colors.card, borderColor: colors.border },
+              filterStatus === tab.key && styles.activeFilterChip,
+            ]}
             onPress={() => setFilterStatus(tab.key)}
           >
             <Text
               style={[
                 styles.filterChipText,
+                { color: colors.subtext },
                 filterStatus === tab.key && styles.activeFilterChipText,
               ]}
             >
@@ -132,8 +159,8 @@ export default function MyTasksScreen({ navigation }) {
       {/* Görev Listesi (FlatList) */}
       {isLoading && myTasks.length === 0 ? (
         <View style={styles.centerContainer}>
-          <ActivityIndicator size="large" color="#3B82F6" />
-          <Text style={styles.loadingText}>Görevler Yükleniyor...</Text>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <Text style={[styles.loadingText, { color: colors.subtext }]}>Görevler Yükleniyor...</Text>
         </View>
       ) : (
         <FlatList
@@ -146,15 +173,15 @@ export default function MyTasksScreen({ navigation }) {
             <RefreshControl
               refreshing={isLoading}
               onRefresh={fetchMyTasks}
-              tintColor="#3B82F6"
-              colors={['#3B82F6']}
+              tintColor={colors.primary}
+              colors={[colors.primary]}
             />
           }
           // Liste Boş İse Gösterilecek Alan
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <Text style={styles.emptyTitle}>Görev Bulunamadı</Text>
-              <Text style={styles.emptySubtitle}>
+              <Text style={[styles.emptyTitle, { color: colors.text }]}>Görev Bulunamadı</Text>
+              <Text style={[styles.emptySubtitle, { color: colors.subtext }]}>
                 {filterStatus === 'ALL'
                   ? 'Henüz üzerinize atanmış bir görev bulunmuyor.'
                   : 'Bu filtreye uygun görev bulunamadı.'}
@@ -166,7 +193,7 @@ export default function MyTasksScreen({ navigation }) {
 
       {/* Sağ Alttaki Yuvarlak Yeni Görev Ekleme Butonu (FAB) */}
       <TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { backgroundColor: colors.primary }]}
         onPress={() => navigation.navigate('CreateTask')}
       >
         <Text style={styles.fabText}>+</Text>
@@ -180,13 +207,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0F172A',
+    paddingTop: Platform.OS === 'android' ? (StatusBar.currentHeight || 24) : 0,
   },
   userHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 16,
+    paddingBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#1E293B',
   },
@@ -201,13 +230,23 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     backgroundColor: '#334155',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
     borderRadius: 8,
   },
   logoutText: {
     color: '#EF4444',
     fontSize: 13,
+    fontWeight: '600',
+  },
+  themeToggleButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  themeToggleText: {
+    fontSize: 12,
     fontWeight: '600',
   },
   filterContainer: {
