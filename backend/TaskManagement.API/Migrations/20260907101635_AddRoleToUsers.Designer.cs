@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaskManagement.API.Data;
@@ -11,9 +12,11 @@ using TaskManagement.API.Data;
 namespace TaskManagement.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260907101635_AddRoleToUsers")]
+    partial class AddRoleToUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,45 +25,6 @@ namespace TaskManagement.API.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskManagement.API.Entities.RefreshToken", b =>
-                {
-                    b.Property<int>("RefreshTokenID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RefreshTokenID"));
-
-                    b.Property<DateTime>("Created_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("Expires_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ReplacedByToken")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<DateTime?>("Revoked_at")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("integer");
-
-                    b.HasKey("RefreshTokenID");
-
-                    b.HasIndex("Token")
-                        .IsUnique();
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("TaskManagement.API.Entities.TaskItem", b =>
                 {
                     b.Property<int>("TaskID")
@@ -68,9 +32,6 @@ namespace TaskManagement.API.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TaskID"));
-
-                    b.Property<string>("Audio_Url")
-                        .HasColumnType("text");
 
                     b.Property<DateTime?>("Completed_at")
                         .HasColumnType("timestamp with time zone");
@@ -188,17 +149,6 @@ namespace TaskManagement.API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskManagement.API.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("TaskManagement.API.Entities.User", "User")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("TaskManagement.API.Entities.TaskItem", b =>
                 {
                     b.HasOne("TaskManagement.API.Entities.User", "User")
@@ -236,8 +186,6 @@ namespace TaskManagement.API.Migrations
 
             modelBuilder.Entity("TaskManagement.API.Entities.User", b =>
                 {
-                    b.Navigation("RefreshTokens");
-
                     b.Navigation("TaskLogs");
 
                     b.Navigation("Tasks");

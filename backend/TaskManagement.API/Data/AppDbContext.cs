@@ -23,6 +23,9 @@ namespace TaskManagement.API.Data
         // Veritabanındaki 'Task_Logs' (Görev Hareketleri) tablosunu temsil eden DbSet.
         public DbSet<TaskLog> TaskLogs { get; set; } = null!;
 
+        // Veritabanındaki 'RefreshTokens' (Yenileme Belirteçleri) tablosunu temsil eden DbSet.
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+
         /// <summary>
         /// Veritabanı tabloları oluşturulurken çalışacak özel Fluent API konfigürasyonları.
         /// </summary>
@@ -59,6 +62,18 @@ namespace TaskManagement.API.Data
                 .WithMany(u => u.TaskLogs)
                 .HasForeignKey(tl => tl.UserID);
 
+            // 5. RefreshToken Konfigürasyonu:
+            // Token alanı hızlı arama ve tekillik için Unique indekslenir.
+            // User silindiğinde bağlı tüm refresh token'lar Cascade olarak silinir.
+            modelBuilder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasIndex(rt => rt.Token).IsUnique();
+
+                entity.HasOne(rt => rt.User)
+                    .WithMany(u => u.RefreshTokens)
+                    .HasForeignKey(rt => rt.UserID)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 }

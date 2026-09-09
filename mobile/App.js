@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, ActivityIndicator, View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -13,6 +13,7 @@ import MyTasksScreen from './src/screens/MyTasksScreen';
 import TaskDetailScreen from './src/screens/TaskDetailScreen';
 import TaskLogsScreen from './src/screens/TaskLogsScreen';
 import CreateTaskScreen from './src/screens/CreateTaskScreen';
+import AdminDashboardScreen from './src/screens/AdminDashboardScreen';
 
 // React Navigation için Native Stack Yönlendirici Örneği Oluşturulur
 const Stack = createNativeStackNavigator();
@@ -22,14 +23,19 @@ const Stack = createNativeStackNavigator();
  * Kullanıcının oturum açıp açmadığını kontrol eder ve ekran navigasyonunu yönetir.
  */
 export default function App() {
-  // Zustand Auth Store'dan kullanıcı durumu çekilir
-  const { user, isLoading } = useAuthStore();
+  // Zustand Auth Store'dan kullanıcı durumu ve ilk açılış oturum kontrol metodu çekilir
+  const { user, isCheckingAuth, checkAuth } = useAuthStore();
   // Zustand Theme Store'dan karanlık mod durumu çekilir
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const theme = isDarkMode ? darkTheme : lightTheme;
 
-  // Yüklenme devam ediyorken Spinner gösterilir
-  if (isLoading) {
+  // Uygulama açılışında SecureStore'dan kayıtlı oturumu kontrol et
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  // Sadece ilk açılışta oturum kontrolü sürerken Spinner gösterilir (giriş yaparken ekran yok edilmez)
+  if (isCheckingAuth) {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: theme.background }]}>
         <StatusBar
@@ -99,6 +105,14 @@ export default function App() {
               component={CreateTaskScreen}
               options={{ title: 'Yeni Görev', presentation: 'modal' }}
             />
+            {/* Yönetici Paneli Ekranı (Yalnızca Admin) */}
+            {user?.role === 'Admin' && (
+              <Stack.Screen
+                name="AdminDashboard"
+                component={AdminDashboardScreen}
+                options={{ title: 'Yönetici Kontrol Paneli' }}
+              />
+            )}
           </>
         )}
       </Stack.Navigator>

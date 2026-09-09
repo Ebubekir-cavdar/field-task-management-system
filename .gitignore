@@ -1,0 +1,33 @@
+# .NET / C#
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+
+# Node / React Native / Expo
+node_modules/
+.expo/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+dist/
+test-dist/
+
+# Logs & Temp
+*.log
+scratch/
+.system_generated/
+emulator_screen.png
+
+# Uploaded test media (optional keep folder structure)
+backend/TaskManagement.API/wwwroot/uploads/tasks/*
+!backend/TaskManagement.API/wwwroot/uploads/tasks/.gitkeep

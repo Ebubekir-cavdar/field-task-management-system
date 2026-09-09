@@ -68,8 +68,9 @@ export const useTaskStore = create((set, get) => ({
    * @param {number} taskId Tamamlanacak görev ID'si
    * @param {string} photoUri Kameradan çekilen fotoğrafın yerel URI adresi
    * @param {object} location Cihazdan çekilen GPS konum nesnesi ({ latitude, longitude })
+   * @param {string} audioUri Kaydedilen ses dosyasının yerel URI yolu (opsiyonel)
    */
-  completeTask: async (taskId, photoUri, location = null) => {
+  completeTask: async (taskId, photoUri, location = null, audioUri = null) => {
     set({ isLoading: true, error: null });
     try {
       const formData = new FormData();
@@ -84,6 +85,19 @@ export const useTaskStore = create((set, get) => ({
           uri: photoUri,
           name: filename,
           type: type,
+        });
+      }
+
+      // Ses kaydı (audio note) var ise form verilerine ekle
+      if (audioUri) {
+        const audioFilename = audioUri.split('/').pop() || `audio_${taskId}.m4a`;
+        const audioMatch = /\.(\w+)$/.exec(audioFilename);
+        const audioType = audioMatch ? `audio/${audioMatch[1]}` : 'audio/m4a';
+
+        formData.append('audio', {
+          uri: audioUri,
+          name: audioFilename,
+          type: audioType,
         });
       }
 

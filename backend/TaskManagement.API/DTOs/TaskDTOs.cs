@@ -20,11 +20,12 @@ namespace TaskManagement.API.DTOs
 
     /// <summary>
     /// Görev Tamamlama İsteği DTO Sınıfı (POST /api/v1/tasks/{taskId}/complete)
-    /// Multipart form-data ile gönderilen kanıt fotoğrafını tutar.
+    /// Multipart form-data ile gönderilen kanıt fotoğrafı ve isteğe bağlı ses kaydını tutar.
     /// </summary>
     public class CompleteTaskRequest
     {
         public IFormFile? Photo { get; set; }
+        public IFormFile? Audio { get; set; }
         public string? Latitude { get; set; }
         public string? Longitude { get; set; }
     }
@@ -44,6 +45,7 @@ namespace TaskManagement.API.DTOs
         public DateTime? Completed_at { get; set; }
         public DateTime Created_at { get; set; }
         public string? Proof_Image_Url { get; set; }
+        public string? Audio_Url { get; set; }
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public string UserName { get; set; } = string.Empty;

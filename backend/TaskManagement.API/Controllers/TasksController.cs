@@ -2,20 +2,25 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskManagement.API.Data;
 using TaskManagement.API.DTOs;
 using TaskManagement.API.Entities;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace TaskManagement.API.Controllers
 {
     /// <summary>
     /// Görev yönetimi operasyonlarını (Ekleme, Listeleme, Başlatma, Fotoğraflı Tamamlama, Log Geçmişi) barındıran Controller.
     /// Route: /api/v1/tasks
-    /// Sadeleştirilmiş Mimaride HTTP Header ('X-User-ID') üzerinden kullanıcı kimliği okunur.
+    /// JWT Bearer Token ile yetkilendirme sağlar, geriye dönük uyumluluk için X-User-ID başlığını da destekler.
     /// </summary>
+    [EnableRateLimiting("general-policy")]
+    [Authorize]
     [ApiController]
     [Route("api/v1/tasks")]
     public class TasksController : ControllerBase
@@ -28,16 +33,23 @@ namespace TaskManagement.API.Controllers
         }
 
         /// <summary>
-        /// HTTP Başlığından ('X-User-ID') istek atan kullanıcının ID'sini okuyan yardımcı metod.
+        /// İstek atan kullanıcının ID'sini JWT claim'lerinden ('NameIdentifier') veya HTTP başlığından ('X-User-ID') okur.
         /// </summary>
         private int GetCurrentUserId()
         {
+            // 1. Öncelik: JWT Token Claim
+            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim != null && int.TryParse(claim.Value, out int jwtUserId))
+            {
+                return jwtUserId;
+            }
+
+            // 2. Öncelik: Geriye dönük uyumluluk için X-User-ID başlığı
             var headerValue = Request.Headers["X-User-ID"].FirstOrDefault();
             if (!string.IsNullOrEmpty(headerValue) && int.TryParse(headerValue, out int userId))
             {
                 return userId;
             }
-            // Başlık yoksa varsayılan olarak 1 (İlk kullanıcı) kabul et
             return 1;
         }
 
@@ -57,6 +69,7 @@ namespace TaskManagement.API.Controllers
                 Completed_at = t.Completed_at,
                 Created_at = t.Created_at,
                 Proof_Image_Url = t.Proof_Image_Url,
+                Audio_Url = t.Audio_Url,
                 Latitude = t.Latitude,
                 Longitude = t.Longitude,
                 UserName = t.User != null ? t.User.Name : "",
@@ -82,12 +95,20 @@ namespace TaskManagement.API.Controllers
 
         /// <summary>
         /// Yeni Görev Oluşturma (POST /api/v1/tasks)
+        /// Yalnızca 'Admin' rolüne sahip kullanıcılar görev oluşturup atayabilir.
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            int currentUserId = GetCurrentUserId();
+            var currentUser = await _context.Users.FindAsync(currentUserId);
+            if (currentUser == null || (currentUser.Role != "Admin" && currentUser.UserID != 1))
+            {
+                return StatusCode(403, new { message = "Yalnızca yöneticiler (Admin) yeni görev oluşturup atayabilir." });
+            }
 
             var assignedUser = await _context.Users.FindAsync(request.UserID);
             if (assignedUser == null)
@@ -206,6 +227,29 @@ namespace TaskManagement.API.Controllers
                 task.Proof_Image_Url = $"/uploads/tasks/{fileName}";
             }
 
+            var audio = request.Audio;
+            if (audio != null && audio.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "tasks");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var fileExtension = Path.GetExtension(audio.FileName);
+                if (string.IsNullOrEmpty(fileExtension)) fileExtension = ".m4a";
+
+                var fileName = $"audio_{taskId}_{DateTime.UtcNow.Ticks}_{Guid.NewGuid().ToString().Substring(0, 8)}{fileExtension}";
+                var filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await audio.CopyToAsync(stream);
+                }
+
+                task.Audio_Url = $"/uploads/tasks/{fileName}";
+            }
+
             if (!string.IsNullOrWhiteSpace(request.Latitude) && double.TryParse(request.Latitude.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double parsedLat))
             {
                 task.Latitude = parsedLat;
@@ -227,6 +271,7 @@ namespace TaskManagement.API.Controllers
                 status = task.Status, 
                 completed_at = task.Completed_at,
                 proof_Image_Url = task.Proof_Image_Url,
+                audio_Url = task.Audio_Url,
                 latitude = task.Latitude,
                 longitude = task.Longitude
             });

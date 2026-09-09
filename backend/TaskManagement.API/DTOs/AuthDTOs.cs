@@ -35,15 +35,40 @@ namespace TaskManagement.API.DTOs
 
         [Required(ErrorMessage = "Şifre alanı zorunludur.")]
         public string Password { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Beni Hatırla seçeneği (True ise token geçerlilik süresi 30 güne uzatılır).
+        /// </summary>
+        public bool RememberMe { get; set; } = false;
     }
 
     /// <summary>
     /// Giriş Başarılı Olduğunda İstemciye Dönülen Yanıt DTO Sınıfı.
-    /// Sadeleştirilmiş mimaride doğrudan kullanıcı bilgilerini içerir.
+    /// Access Token (JWT), Refresh Token ve kullanıcı bilgilerini içerir.
     /// </summary>
     public class AuthResponse
     {
+        public string Token { get; set; } = string.Empty; // Kısa ömürlü JWT Access Token (15 dk)
+        public string RefreshToken { get; set; } = string.Empty; // Uzun ömürlü Refresh Token
         public UserResponse User { get; set; } = null!;
+    }
+
+    /// <summary>
+    /// Token Yenileme İsteği DTO Sınıfı (POST /api/v1/auth/refresh)
+    /// </summary>
+    public class RefreshTokenRequest
+    {
+        [Required(ErrorMessage = "RefreshToken alanı zorunludur.")]
+        public string RefreshToken { get; set; } = string.Empty;
+    }
+
+    /// <summary>
+    /// Token İptal İsteği DTO Sınıfı (POST /api/v1/auth/revoke)
+    /// </summary>
+    public class RevokeTokenRequest
+    {
+        [Required(ErrorMessage = "RefreshToken alanı zorunludur.")]
+        public string RefreshToken { get; set; } = string.Empty;
     }
 
     /// <summary>
@@ -56,6 +81,7 @@ namespace TaskManagement.API.DTOs
         public string Name { get; set; } = string.Empty;
         public string Surname { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
+        public string Role { get; set; } = "Worker";
         public DateTime Created_at { get; set; }
     }
 }

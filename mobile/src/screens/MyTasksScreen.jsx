@@ -104,9 +104,14 @@ export default function MyTasksScreen({ navigation }) {
       <View style={[styles.userHeader, { borderBottomColor: colors.border }]}>
         <View>
           <Text style={[styles.welcomeText, { color: colors.subtext }]}>Hoş Geldiniz,</Text>
-          <Text style={[styles.userNameText, { color: colors.text }]}>
-            {user?.name} {user?.surname}
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+            <Text style={[styles.userNameText, { color: colors.text }]}>
+              {user?.name} {user?.surname}
+            </Text>
+            <View style={[styles.headerRoleBadge, { backgroundColor: user?.role === 'Admin' ? '#8B5CF6' : '#3B82F6' }]}>
+              <Text style={styles.headerRoleBadgeText}>{user?.role === 'Admin' ? '👑 Admin' : '👷 Worker'}</Text>
+            </View>
+          </View>
         </View>
 
         {/* Tema Değiştirme & Çıkış Yap Butonları */}
@@ -125,6 +130,27 @@ export default function MyTasksScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Yalnızca Admin Rolü için Yönetici Paneli Hızlı Erişim Butonu */}
+      {user?.role === 'Admin' && (
+        <TouchableOpacity
+          style={[styles.adminBanner, { backgroundColor: isDarkMode ? '#4C1D95' : '#EDE9FE', borderColor: '#8B5CF6' }]}
+          onPress={() => navigation.navigate('AdminDashboard')}
+        >
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, flex: 1 }}>
+            <Text style={{ fontSize: 20 }}>👑</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.adminBannerTitle, { color: isDarkMode ? '#F8FAFC' : '#4C1D95' }]}>
+                Yönetici Paneli
+              </Text>
+              <Text style={[styles.adminBannerSubtitle, { color: isDarkMode ? '#DDD6FE' : '#6D28D9' }]}>
+                Tüm saha görevlerini, personelleri ve istatistikleri yönetin
+              </Text>
+            </View>
+          </View>
+          <Text style={[styles.adminBannerArrow, { color: isDarkMode ? '#DDD6FE' : '#6D28D9' }]}>Aç →</Text>
+        </TouchableOpacity>
+      )}
 
       {/* Filtreleme Sekmeleri (Filter Chips) */}
       <View style={styles.filterContainer}>
@@ -191,13 +217,15 @@ export default function MyTasksScreen({ navigation }) {
         />
       )}
 
-      {/* Sağ Alttaki Yuvarlak Yeni Görev Ekleme Butonu (FAB) */}
-      <TouchableOpacity
-        style={[styles.fab, { backgroundColor: colors.primary }]}
-        onPress={() => navigation.navigate('CreateTask')}
-      >
-        <Text style={styles.fabText}>+</Text>
-      </TouchableOpacity>
+      {/* Sağ Alttaki Yuvarlak Yeni Görev Ekleme Butonu (FAB) - Yalnızca Admin için */}
+      {user?.role === 'Admin' && (
+        <TouchableOpacity
+          style={[styles.fab, { backgroundColor: colors.primary }]}
+          onPress={() => navigation.navigate('CreateTask')}
+        >
+          <Text style={styles.fabText}>+</Text>
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 }
@@ -378,6 +406,40 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '300',
     lineHeight: 36,
+  },
+  headerRoleBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  headerRoleBadgeText: {
+    color: '#FFFFFF',
+    fontSize: 10,
+    fontWeight: '800',
+  },
+  adminBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
+    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  adminBannerTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  adminBannerSubtitle: {
+    fontSize: 11,
+    marginTop: 2,
+  },
+  adminBannerArrow: {
+    fontSize: 14,
+    fontWeight: '700',
+    marginLeft: 8,
   },
 });
 

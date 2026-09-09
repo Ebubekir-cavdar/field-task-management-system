@@ -35,6 +35,11 @@ namespace TaskManagement.API.Entities
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
 
+        // Kullanıcının rolü: 'Admin' (Yönetici) veya 'Worker' (Saha Personeli). Varsayılan: 'Worker'.
+        [Required]
+        [MaxLength(20)]
+        public string Role { get; set; } = "Worker";
+
         // Hesabın oluşturulma tarihi (Varsayılan olarak UTC zaman dilimi).
         public DateTime Created_at { get; set; } = DateTime.UtcNow;
 
@@ -45,6 +50,9 @@ namespace TaskManagement.API.Entities
 
         // Kullanıcının gerçekleştirdiği görev hareketlerinin (loglarının) koleksiyonu.
         public ICollection<TaskLog> TaskLogs { get; set; } = new List<TaskLog>();
+
+        // Kullanıcıya ait Refresh Token kayıtlarının koleksiyonu.
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -30,23 +30,55 @@ export default function LoginRegisterScreen() {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
 
-  // Global Auth Store ve Theme Store
-  const { login, register, isLoading, error } = useAuthStore();
+  // Beni Hatırla Seçeneği Durumu (Varsayılan olarak açık: true)
+  const [rememberMe, setRememberMe] = useState(true);
+
+  // Global Auth Store (lockoutSeconds durumu store'da tutularak ekran yenilense bile korunur)
+  const { login, register, isLoading, error, lockoutSeconds, setLockoutSeconds } = useAuthStore();
   const { isDarkMode, toggleTheme } = useThemeStore();
   const colors = isDarkMode ? darkTheme : lightTheme;
+
+  // Rate Limit Geri Sayım Zamanlayıcısı: 0 olana kadar saniye saniye azaltır
+  useEffect(() => {
+    if (lockoutSeconds <= 0) return;
+    const interval = setInterval(() => {
+      const current = useAuthStore.getState().lockoutSeconds;
+      if (current <= 1) {
+        setLockoutSeconds(0);
+        clearInterval(interval);
+      } else {
+        setLockoutSeconds(current - 1);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [lockoutSeconds]);
 
   /**
    * Giriş Yap butonuna basıldığında tetiklenir.
    */
   const handleLogin = async () => {
+    if (lockoutSeconds > 0) return;
     if (!email.trim() || !password.trim()) {
       Alert.alert('Eksik Bilgi', 'Lütfen e-posta ve şifrenizi giriniz.');
       return;
     }
     try {
-      await login(email, password);
+      await login(email, password, rememberMe);
     } catch (err) {
-      Alert.alert('Giriş Başarısız', err.message || 'Giriş yapılamadı.');
+      const isRateLimit =
+        err?.isRateLimited ||
+        err?.retryAfterSeconds ||
+        err?.message?.includes('Çok fazla') ||
+        err?.message?.includes('saniye');
+
+      if (isRateLimit) {
+        const match = err.message?.match(/(\d+)\s*saniye/);
+        const seconds = err.retryAfterSeconds || (match ? parseInt(match[1], 10) : 60);
+        setLockoutSeconds(seconds);
+        Alert.alert('Güvenlik Kilidi', err.message);
+      } else {
+        Alert.alert('Giriş Başarısız', err.message || 'Giriş yapılamadı.');
+      }
     }
   };
 
@@ -54,6 +86,7 @@ export default function LoginRegisterScreen() {
    * Kayıt Ol butonuna basıldığında tetiklenir.
    */
   const handleRegister = async () => {
+    if (lockoutSeconds > 0) return;
     if (!name.trim() || !surname.trim() || !email.trim() || !password.trim()) {
       Alert.alert('Eksik Bilgi', 'Lütfen tüm alanları doldurunuz.');
       return;
@@ -68,7 +101,20 @@ export default function LoginRegisterScreen() {
         { text: 'Tamam', onPress: () => setIsLoginTab(true) },
       ]);
     } catch (err) {
-      Alert.alert('Kayıt Başarısız', err.message || 'Kayıt olunamadı.');
+      const isRateLimit =
+        err?.isRateLimited ||
+        err?.retryAfterSeconds ||
+        err?.message?.includes('Çok fazla') ||
+        err?.message?.includes('saniye');
+
+      if (isRateLimit) {
+        const match = err.message?.match(/(\d+)\s*saniye/);
+        const seconds = err.retryAfterSeconds || (match ? parseInt(match[1], 10) : 60);
+        setLockoutSeconds(seconds);
+        Alert.alert('Güvenlik Kilidi', err.message);
+      } else {
+        Alert.alert('Kayıt Başarısız', err.message || 'Kayıt olunamadı.');
+      }
     }
   };
 
@@ -163,17 +209,68 @@ export default function LoginRegisterScreen() {
             secureTextEntry
           />
 
-          {/* Varsa Hata Mesajı Gösterimi */}
-          {error ? <Text style={styles.errorText}>{error}</Text> : null}
+          {/* Beni Hatırla Seçeneği (Yalnızca Giriş Yap sekmesinde gösterilir) */}
+          {isLoginTab && (
+            <TouchableOpacity
+              style={styles.rememberMeContainer}
+              onPress={() => setRememberMe(!rememberMe)}
+              activeOpacity={0.7}
+            >
+              <View
+                style={[
+                  styles.checkbox,
+                  { borderColor: colors.border },
+                  rememberMe && { backgroundColor: colors.primary, borderColor: colors.primary },
+                ]}
+              >
+                {rememberMe && <Text style={styles.checkmark}>✓</Text>}
+              </View>
+              <Text style={[styles.rememberMeText, { color: colors.text }]}>Beni Hatırla</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* Rate Limit Geri Sayım Rozeti / Uyarı Kartı */}
+          {lockoutSeconds > 0 ? (
+            <View
+              style={[
+                styles.lockoutCard,
+                {
+                  backgroundColor: isDarkMode ? '#450a0a' : '#FEF2F2',
+                  borderColor: isDarkMode ? '#dc2626' : '#FCA5A5',
+                },
+              ]}
+            >
+              <Text style={[styles.lockoutTitle, { color: isDarkMode ? '#F87171' : '#DC2626' }]}>
+                ⚠️ Güvenlik Kilidi Devrede
+              </Text>
+              <Text style={[styles.lockoutText, { color: isDarkMode ? '#FECACA' : '#991B1B' }]}>
+                Çok fazla hatalı deneme yapıldı.{'\n'}
+                Yeniden denemek için kalan süre:{' '}
+                <Text style={styles.countdownBold}>{lockoutSeconds} saniye</Text>
+              </Text>
+            </View>
+          ) : error ? (
+            <Text style={styles.errorText}>{error}</Text>
+          ) : null}
 
           {/* Gönder (Giriş / Kayıt) Butonu */}
           <TouchableOpacity
-            style={[styles.submitButton, { backgroundColor: colors.primary }]}
+            style={[
+              styles.submitButton,
+              {
+                backgroundColor: lockoutSeconds > 0 ? (isDarkMode ? '#334155' : '#94A3B8') : colors.primary,
+                opacity: lockoutSeconds > 0 ? 0.75 : 1,
+              },
+            ]}
             onPress={isLoginTab ? handleLogin : handleRegister}
-            disabled={isLoading}
+            disabled={isLoading || lockoutSeconds > 0}
           >
             {isLoading ? (
               <ActivityIndicator color="#FFFFFF" />
+            ) : lockoutSeconds > 0 ? (
+              <Text style={styles.submitButtonText}>
+                ⏳ Lütfen Bekleyin ({lockoutSeconds}s)
+              </Text>
             ) : (
               <Text style={styles.submitButtonText}>
                 {isLoginTab ? 'Oturum Aç' : 'Kayıt İşlemini Tamamla'}
@@ -297,6 +394,52 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
+  },
+  lockoutCard: {
+    marginTop: 16,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    alignItems: 'center',
+  },
+  lockoutTitle: {
+    fontSize: 14,
+    fontWeight: '700',
+    marginBottom: 4,
+  },
+  lockoutText: {
+    fontSize: 13,
+    textAlign: 'center',
+    lineHeight: 18,
+  },
+  countdownBold: {
+    fontWeight: '800',
+    textDecorationLine: 'underline',
+  },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 14,
+    marginBottom: 4,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 5,
+    borderWidth: 1.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  checkmark: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '800',
+    lineHeight: 14,
+  },
+  rememberMeText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
 

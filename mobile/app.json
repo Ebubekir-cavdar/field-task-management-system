@@ -1,20 +1,23 @@
 {
   "expo": {
-    "name": "mobile",
+    "name": "Saha Görev Yönetimi",
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
+    "splash": {
+      "image": "./assets/app-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#20232C"
+    },
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#20232C",
+        "foregroundImage": "./assets/app-adaptive.png"
       }
     },
     "web": {

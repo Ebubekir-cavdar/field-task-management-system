@@ -46,6 +46,9 @@ namespace TaskManagement.API.Entities
         // Görev tamamlanırken çekilen kanıt fotoğrafının sunucudaki bağıl URL yolu (/uploads/tasks/...).
         public string? Proof_Image_Url { get; set; }
 
+        // Görev tamamlanırken kaydedilen sesli açıklamanın sunucudaki bağıl URL yolu (/uploads/tasks/...).
+        public string? Audio_Url { get; set; }
+
         // Görevin tamamlandığı esnadaki GPS enlem (Latitude) koordinatı.
         public double? Latitude { get; set; }
 
