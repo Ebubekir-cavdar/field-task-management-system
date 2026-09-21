@@ -201,6 +201,24 @@ using (var scope = app.Services.CreateScope())
         userOne.Role = "Admin";
         db.SaveChanges();
     }
+
+    // Mevcut AMR ses kayıtlarının .wav sürümlerine güncellenmesi (Tarayıcı uyumluluğu için)
+    var tasksWithM4a = db.Tasks.Where(t => t.Audio_Url != null && t.Audio_Url.EndsWith(".m4a")).ToList();
+    bool updated = false;
+    foreach (var taskItem in tasksWithM4a)
+    {
+        var wavPath = taskItem.Audio_Url.Substring(0, taskItem.Audio_Url.Length - 4) + ".wav";
+        var physicalWav = Path.Combine(wwwrootPath, wavPath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+        if (File.Exists(physicalWav))
+        {
+            taskItem.Audio_Url = wavPath;
+            updated = true;
+        }
+    }
+    if (updated)
+    {
+        db.SaveChanges();
+    }
 }
 
 // Uygulamayı başlatır ve dinlemeye alır.

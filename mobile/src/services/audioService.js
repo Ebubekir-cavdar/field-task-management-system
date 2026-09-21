@@ -86,7 +86,7 @@ export const startRecording = async () => {
     };
 
     const recorder = new ExpoAudioModule.AudioModule.AudioRecorder(preset);
-    await recorder.prepareToRecordAsync();
+    await recorder.prepareToRecordAsync(preset);
     recorder.record();
     return recorder;
   } catch (err) {

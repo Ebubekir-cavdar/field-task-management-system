@@ -1,5 +1,16 @@
-cd C:\Users\PC\Desktop\field-task-management-system\backend\TaskManagement.API
+# 1. Backend (.NET 8 Web API)
+cd backend/TaskManagement.API
 dotnet run --urls "http://0.0.0.0:5000"
 
-cd C:\Users\PC\Desktop\field-task-management-system\mobile
+# 2. Mobil Uygulama (React Native Expo)
+cd mobile
 npx expo start -c
+
+# 3. Web Admin Paneli (React + Vite)
+cd admin-web
+npm run dev
+
+# Erişim Adresleri:
+# PC (Tarayıcı): http://localhost:5173/
+# Mobil (Web Panel): http://<BILGISAYAR_YEREL_IP>:5173/ (Örn: http://192.168.1.109:5173/)
+# Swagger API Dokümantasyonu: http://localhost:5000/swagger
